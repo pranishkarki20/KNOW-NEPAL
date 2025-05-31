@@ -1,0 +1,278 @@
+/* Reset & base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 30px;
+  box-shadow: 0 4px 10px rgba(26, 24, 24, 0.744);
+  backdrop-filter: saturate(180%) blur(20px);
+  z-index: 1000;
+  width: 55%;
+  margin: 0 auto;
+  font-style: italic;
+  transition: background-color 0.3s ease;
+  font-size: 1.5em;
+  border-radius: 20px; /* Added for curved border */
+}
+
+.logo img {
+  height: 60px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #29040b;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.toggle-button {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive navbar for mobile */
+@media (max-width: 768px) {
+  .toggle-button {
+    display: block;
+    color: #333;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: #ffffffee;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    gap: 15px;
+    padding: 20px 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+ margin: 0;
+  height: 100vh;
+  background-image: url('pp.jpg');  /* <-- Add your image filename here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;              /* optional: center content vertically/horizontally */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(252, 249, 249);               /* text color for contrast */
+  text-align: center;
+  padding: 20px;
+   transition: opacity 0.7s ease;
+   font-family: cursive;
+   font-size: 2em;
+}
+#typing-effect {
+    font-size: 1.5em;
+    font-family: cursive;
+    color: rgb(245, 248, 247);
+    white-space: nowrap;
+    border-right: 3px solid rgb(14, 206, 164);
+    padding-right: 5px;
+    display: inline-block;
+   
+  }
+.card6{
+          background:transparent;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgb(250, 250, 250);
+          padding: 32px 24px;
+          margin: 24px auto;
+
+        }
+.card6 h6 {
+          color: #ffffff;
+          margin-bottom: 12px;
+        }
+.card6 p {
+          color: #fffefe;
+          font-size: 1.3em;
+          line-height: 1.7;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+.card6 a {
+          color: #f6f9f7;
+        ;
+        }
+  /* Three columns side by side */
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+/* Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+/* Add some shadows to create a card effect */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+/* Some left and right padding inside the container */
+.container {
+  padding: 0 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Clear floats */
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+/* About section styles */
+
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 30px 8px;
+    font-size: 1em;
+  }
+  .about-section h2 {
+    font-size: 2em;
+  }
+}
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+.card1{
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  font-family: inherit;
+  font-size: 1.6em;
+}
+.button-center {
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width:200px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  border-radius: 150px;
+}
+
+.button:hover {
+  background-color: rgb(102, 0, 255);
+}
+#goUpBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  color: rgb(10, 9, 9);
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: none; /* Hidden by default */
+  transition: background-color 0.3s;
+}
+
+#goUpBtn:hover {
+  background-color: rgb(55, 255, 0);
+}
+.footer {
+  background-color: #bababa;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

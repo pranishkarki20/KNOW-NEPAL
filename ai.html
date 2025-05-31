@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Know Nepal - BHAI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="Know(1).png">
+  <style>
+    body {
+  background: linear-gradient(to right, #5d7274, #80deea);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-container {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.chat-container:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.chat-header {
+  background: linear-gradient(to right, #212728, #00796b);
+  color: white;
+  padding: 18px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 600;
+  border-bottom: 2px solid #004d40;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  scroll-behavior: smooth;
+}
+
+.message {
+  margin-bottom: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  max-width: 80%;
+  line-height: 1.5;
+  font-size: 0.95em;
+}
+
+.message.bot {
+  background: #e0f7fa;
+  align-self: flex-start;
+  border-left: 4px solid #0097a7;
+}
+
+.message.user {
+  background: #c8e6c9;
+  align-self: flex-end;
+  border-right: 4px solid #388e3c;
+}
+
+.chat-input {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  background: #fafafa;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1em;
+}
+
+.chat-input button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #00796b;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.chat-input button:hover {
+  background: #004d40;
+}
+
+.language-select {
+  padding: 10px;
+  text-align: center;
+  background: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
+
+.language-select select {
+  padding: 5px 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">BHAI</div>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your reply here..." autocomplete="off" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    let userName = "";
+    let stage = "askName";
+
+    function sendMessage() {
+      const inputField = document.getElementById("user-input");
+      const userInput = inputField.value.trim();
+      if (!userInput) return;
+
+      appendMessage("You", userInput, "user");
+      inputField.value = "";
+      inputField.disabled = true; // temporarily disable input during bot reply
+
+      setTimeout(() => {
+        if(stage === "askName") {
+          userName = userInput.split(' ')[0]; // take first word as name
+          appendMessage("Bhai", `Hello, ${userName}! Nice to meet you. What kind of places would you like to explore in Nepal? You can choose from: Adventure, Religious, Hiking, Culture, or Food.`, "bot");
+          stage = "chooseCategory";
+
+        } else if(stage === "chooseCategory") {
+          handleCategory(userInput.toLowerCase());
+
+        } else if(stage === "afterInfo") {
+          if(userInput.toLowerCase().includes("yes") || userInput.toLowerCase().includes("another") || userInput.toLowerCase().includes("more")) {
+            appendMessage("Bhai", `Great! What else would you like to explore? Adventure, Religious, Hiking, Culture, or Food?`, "bot");
+            stage = "chooseCategory";
+          } else if(userInput.toLowerCase().includes("no") || userInput.toLowerCase().includes("bye") || userInput.toLowerCase().includes("exit")) {
+            appendMessage("Bhai", `Thanks for chatting, ${userName}! Hope you enjoy your trip to Nepal. If you want to know more, just refresh the page and chat again. Safe travels!`, "bot");
+            stage = "ended";
+          } else {
+            appendMessage("Bhai", `I'm sorry, I didn't quite get that. Would you like to explore more places? Please reply with yes or no.`, "bot");
+          }
+        }
+        inputField.disabled = false;
+        inputField.focus();
+      }, 700);
+    }
+
+    function appendMessage(sender, message, className) {
+      const chatBox = document.getElementById("chat-box");
+      const msg = document.createElement("div");
+      msg.classList.add("message", className);
+      msg.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function handleCategory(input) {
+      let response = "";
+
+      if (input.includes("adventure")) {
+        response = `
+Nepal is a paradise for adventure lovers! Here are some thrilling activities and places:<br>
+<ul>
+  <li><strong>Bungee Jumping (Bhote Koshi):</strong> The world's highest bungee jump at 160m. Best time: September to November.</li>
+  <li><strong>Paragliding (Pokhara):</strong> Soar above Phewa Lake and the Annapurna ranges. Best time: March to May & September to November.</li>
+  <li><strong>White Water Rafting (Trishuli, Seti, and Kali Gandaki Rivers):</strong> Experience exciting rapids through beautiful valleys. Best time: October to May.</li>
+  <li><strong>Mountain Biking:</strong> Explore trails around Kathmandu Valley, Annapurna Circuit, and Mustang.</li>
+  <li><strong>Canyoning (Pokhara):</strong> Descend waterfalls and gorges with expert guides.</li>
+  <li><strong>Zip Lining (Dhulikhel & Pokhara):</strong> Asia's longest ziplines with stunning mountain views.</li>
+  <li><strong>Heli Skiing (Solukhumbu region):</strong> For expert skiers craving fresh Himalayan powder.</li>
+</ul>
+Make sure to choose licensed operators and safety gear for a safe adventure!
+        `;
+
+      } else if (input.includes("hiking") || input.includes("trek")) {
+        response = `
+Nepal offers some of the world's best trekking routes:<br>
+<ul>
+  <li><strong>Everest Base Camp Trek:</strong> 12-14 days trek to the foot of Mt. Everest with Sherpa culture and breathtaking views.</li>
+  <li><strong>Annapurna Circuit Trek:</strong> 15-20 days covering diverse landscapes, rhododendron forests, and Himalayan panoramas.</li>
+  <li><strong>Ghorepani Poon Hill:</strong> Short 4-6 days trek with stunning sunrise views over Annapurna and Dhaulagiri.</li>
+  <li><strong>Langtang Valley Trek:</strong> Scenic 7-10 days trek through forests, waterfalls, and Tamang villages.</li>
+  <li><strong>Manaslu Circuit Trek:</strong> Remote and less crowded trek with spectacular mountain views. Duration ~14 days.</li>
+  <li><strong>Upper Mustang Trek:</strong> Explore Tibetan-influenced desert landscapes, ancient caves, and monasteries. Duration 12-14 days.</li>
+  <li><strong>Shivapuri National Park:</strong> Easy day hikes near Kathmandu with beautiful nature and birdwatching.</li>
+</ul>
+Remember to pack good hiking boots and acclimatize well!
+        `;
+
+      } else if (input.includes("religious") || input.includes("temple")) {
+        response = `
+Nepal is rich in spiritual heritage with sacred sites:<br>
+<ul>
+  <li><strong>Pashupatinath Temple (Kathmandu):</strong> The holiest Hindu temple dedicated to Lord Shiva. Famous during Maha Shivaratri festival.</li>
+  <li><strong>Boudhanath Stupa (Kathmandu):</strong> One of the largest Buddhist stupas in the world and a Tibetan Buddhist center.</li>
+  <li><strong>Swayambhunath (Monkey Temple):</strong> Ancient hilltop stupa with panoramic views and a blend of Buddhist and Hindu traditions.</li>
+  <li><strong>Lumbini:</strong> Birthplace of Lord Buddha and a major pilgrimage site with monasteries from many countries.</li>
+  <li><strong>Muktinath Temple (Mustang):</strong> Sacred to Hindus and Buddhists, located at 3,710 meters altitude.</li>
+  <li><strong>Janaki Mandir (Janakpur):</strong> A beautiful Hindu temple dedicated to Goddess Sita, heart of Maithili culture.</li>
+  <li><strong>Changu Narayan Temple:</strong> The oldest Hindu temple in Nepal near Bhaktapur, UNESCO World Heritage site.</li>
+</ul>
+Visiting these sites gives you deep insights into Nepal's diverse faiths.
+        `;
+
+      } else if (input.includes("culture")) {
+        response = `
+Nepal’s cultural diversity is vibrant and fascinating:<br>
+<ul>
+  <li><strong>Newar Festivals:</strong> Colorful events like Indra Jatra and Bisket Jatra featuring traditional dances and rituals.</li>
+  <li><strong>Tharu Culture (Terai region):</strong> Known for unique dances, colorful costumes, and festivals like Maghi.</li>
+  <li><strong>Sherpa & Tibetan Heritage:</strong> Mountaineering culture and Buddhist monasteries mainly in Everest region.</li>
+  <li><strong>Gurung & Magar Tribes:</strong> Rich traditions with dances, music, and festivals such as Losar.</li>
+  <li><strong>Major Festivals:</strong> Dashain (biggest Hindu festival), Tihar (festival of lights), Holi (color festival), and Teej (women’s festival).</li>
+  <li><strong>Kathmandu & Patan Durbar Squares:</strong> UNESCO heritage sites with ancient palaces and temples showcasing medieval art.</li>
+</ul>
+Join local festivals to truly experience Nepali culture!
+        `;
+
+      } else if (input.includes("food")) {
+        response = `
+Nepali cuisine is tasty and unique:<br>
+<ul>
+  <li><strong>Momo:</strong> Tibetan-style dumplings filled with chicken, buffalo, or veggies served with spicy sauce.</li>
+  <li><strong>Dal Bhat:</strong> Traditional lentil soup with rice, vegetable curry, and pickles. Staple Nepali meal.</li>
+  <li><strong>Sel Roti:</strong> Sweet, fried ring-shaped rice bread, popular during festivals.</li>
+  <li><strong>Yomari:</strong> Steamed dumplings filled with molasses and sesame seeds, Newari festival delicacy.</li>
+  <li><strong>Gundruk:</strong> Fermented leafy vegetable soup, rich in flavor and nutrients.</li>
+  <li><strong>Chatamari:</strong> Newari rice crepe topped with meat, eggs, or veggies.</li>
+  <li><strong>Thukpa:</strong> Tibetan noodle soup, perfect on cold days.</li>
+  <li><strong>Juju Dhau:</strong> Creamy "king curd" from Bhaktapur, a sweet treat.</li>
+</ul>
+Try street food stalls for authentic Nepali tastes!
+        `;
+
+      } else {
+        appendMessage("Bhai", `Sorry ${userName}, I didn't understand that. Please choose from: Adventure, Religious, Hiking, Culture, or Food.`, "bot");
+        return;
+      }
+
+      appendMessage("Bhai", response, "bot");
+      setTimeout(() => {
+        appendMessage("Bot", "You can ask me about Adventure, Religious, Hiking, Culture, Food, or any other place you'd like to know about Nepal!", "bot");
+stage = "category"; // Ready for a new category input directly
+
+      }, 800);
+    }
+
+    // Start chat with greeting
+    appendMessage("Bhai", "Namaste! Welcome to the Explore Nepal chatbot. What's your name?", "bot");
+    document.getElementById("user-input").focus();
+  </script>
+</body>
+</html>
